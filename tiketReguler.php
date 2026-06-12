@@ -1,7 +1,7 @@
 <?php
-require_once 'Tiket.php';
+require_once 'tiket.php';
 
-class TiketReguler extends Tiket {
+class tiketReguler extends tiket {
     private $tipeAudio;
     private $lokasiBaris;
 
