@@ -30,7 +30,7 @@ $data = $conn->query("SELECT * FROM tabel_tiket")->fetch_all(MYSQLI_ASSOC);
         .grid-summary { display: flex; gap: 20px; margin-bottom: 40px; }
         .card { background: var(--card); padding: 20px; border-radius: 15px; flex: 1; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         
-        table { width: 100%; border-collapse: collapse; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05); margin-bottom: 30px; }
         th { background: var(--primary); color: white; padding: 18px; text-transform: uppercase; font-size: 0.85rem; text-align: left; }
         td { padding: 15px; border-bottom: 1px solid #f1f1f1; text-align: left; }
         tr:hover { background: #f9f9ff; }
@@ -49,13 +49,29 @@ $data = $conn->query("SELECT * FROM tabel_tiket")->fetch_all(MYSQLI_ASSOC);
 <div class="content">
     <?php
     $page = $_GET['page'] ?? 'semua';
+
+    // --- BAGIAN RINGKASAN (Statistik + Semua Data) ---
     if ($page == 'semua') {
         echo "<h1>Dashboard Overview</h1><div class='grid-summary'>";
         $counts = array_count_values(array_column($data, 'jenis_studio'));
         foreach ($counts as $s => $c) echo "<div class='card'><h3>$s</h3><p style='font-size:2rem; color:var(--primary)'>$c</p> Tiket</div>";
         echo "</div>";
+
+        echo "<h1>Daftar Semua Tiket</h1>";
+        echo "<table><tr><th>No</th><th>Film</th><th>Jadwal</th><th>Studio</th><th>Total Harga</th></tr>";
+        $no = 1;
+        foreach ($data as $row) {
+            $class = 'Tiket' . ucfirst($row['jenis_studio']);
+            $obj = new $class(1, '', '', 1, $row['harga_dasar_tiket']);
+            echo "<tr><td>{$no}</td><td>{$row['nama_film']}</td><td>{$row['jadwal_tayang']}</td><td>" . ucfirst($row['jenis_studio']) . "</td><td style='font-weight:bold; color:var(--primary)'>Rp " . number_format($obj->hitungTotalHarga(), 0, ',', '.') . "</td></tr>";
+            $no++;
+        }
+        echo "</table>";
+
     } else {
-        echo "<h1>Studio " . ucfirst($page) . "</h1><table><tr><th>No</th><th>Film</th><th>Jadwal</th>";
+        // --- BAGIAN STUDIO SPESIFIK ---
+        echo "<h1>Studio " . ucfirst($page) . "</h1>";
+        echo "<table><tr><th>No</th><th>Film</th><th>Jadwal</th>";
         
         // Header dinamis
         if ($page == 'reguler') echo "<th>Audio</th><th>Baris</th>";
@@ -63,13 +79,12 @@ $data = $conn->query("SELECT * FROM tabel_tiket")->fetch_all(MYSQLI_ASSOC);
         else echo "<th>Pack</th><th>Butler</th>";
         echo "<th>Total Harga</th></tr>";
 
-        $no = 1; // Inisialisasi nomor urut
+        $no = 1;
         foreach ($data as $row) {
             if ($row['jenis_studio'] == $page) {
-                // Instansiasi objek
-                $obj = ($page == 'reguler') ? new TiketReguler($row['id_tiket'], $row['nama_film'], $row['jadwal_tayang'], $row['jumlah_kursi'], $row['harga_dasar_tiket']) : 
-                       (($page == 'imax') ? new TiketImax($row['id_tiket'], $row['nama_film'], $row['jadwal_tayang'], $row['jumlah_kursi'], $row['harga_dasar_tiket']) : 
-                       new TiketVelvet($row['id_tiket'], $row['nama_film'], $row['jadwal_tayang'], $row['jumlah_kursi'], $row['harga_dasar_tiket']));
+                $obj = ($page == 'reguler') ? new TiketReguler(1, '', '', 1, $row['harga_dasar_tiket']) : 
+                       (($page == 'imax') ? new TiketImax(1, '', '', 1, $row['harga_dasar_tiket']) : 
+                       new TiketVelvet(1, '', '', 1, $row['harga_dasar_tiket']));
                 
                 echo "<tr>
                     <td>{$no}</td>
@@ -79,7 +94,7 @@ $data = $conn->query("SELECT * FROM tabel_tiket")->fetch_all(MYSQLI_ASSOC);
                     <td>".($row['lokasi_baris'] ?? $row['efek_gerak_fitur'] ?? $row['layanan_butler'])."</td>
                     <td style='font-weight:bold; color:var(--primary)'>Rp " . number_format($obj->hitungTotalHarga(), 0, ',', '.') . "</td>
                 </tr>";
-                $no++; // Increment nomor urut
+                $no++;
             }
         }
         echo "</table>";
