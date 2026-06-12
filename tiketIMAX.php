@@ -1,7 +1,7 @@
 <?php
-require_once 'Tiket.php';
+require_once 'tiket.php';
 
-class TiketImax extends Tiket {
+class tiketImax extends tiket {
     private $kacamata3dId;
     private $efekGerakFitur;
 
