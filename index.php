@@ -1,8 +1,8 @@
 <?php
 // Memanggil file kelas yang telah dibuat
-require_once 'TiketReguler.php';
-require_once 'TiketImax.php';
-require_once 'TiketVelvet.php';
+require_once 'tiketReguler.php';
+require_once 'tiketImax.php';
+require_once 'tiketVelvet.php';
 
 // Koneksi ke Database
 $conn = new mysqli("localhost", "root", "", "db_latihan_pbo_trpl1a_nadya_shafa_a_a");
@@ -54,11 +54,11 @@ while ($row = $result->fetch_assoc()) {
                 // Instansiasi objek secara polimorfik
                 $tiket = null;
                 if ($jenis == 'reguler') {
-                    $tiket = new TiketReguler($row['id_tiket'], $row['nama_film'], $row['jadwal_tayang'], $row['jumlah_kursi'], $row['harga_dasar_tiket'], $row['tipe_audio'], $row['lokasi_baris']);
+                    $tiket = new tiketReguler($row['id_tiket'], $row['nama_film'], $row['jadwal_tayang'], $row['jumlah_kursi'], $row['harga_dasar_tiket'], $row['tipe_audio'], $row['lokasi_baris']);
                 } elseif ($jenis == 'imax') {
-                    $tiket = new TiketImax($row['id_tiket'], $row['nama_film'], $row['jadwal_tayang'], $row['jumlah_kursi'], $row['harga_dasar_tiket'], $row['kacamata_3d_id'], $row['efek_gerak_fitur']);
+                    $tiket = new tiketImax($row['id_tiket'], $row['nama_film'], $row['jadwal_tayang'], $row['jumlah_kursi'], $row['harga_dasar_tiket'], $row['kacamata_3d_id'], $row['efek_gerak_fitur']);
                 } elseif ($jenis == 'velvet') {
-                    $tiket = new TiketVelvet($row['id_tiket'], $row['nama_film'], $row['jadwal_tayang'], $row['jumlah_kursi'], $row['harga_dasar_tiket'], $row['bantal_selimut_pack'], $row['layanan_butler']);
+                    $tiket = new tiketVelvet($row['id_tiket'], $row['nama_film'], $row['jadwal_tayang'], $row['jumlah_kursi'], $row['harga_dasar_tiket'], $row['bantal_selimut_pack'], $row['layanan_butler']);
                 }
 
                 // Menampilkan data menggunakan metode polimorfik
