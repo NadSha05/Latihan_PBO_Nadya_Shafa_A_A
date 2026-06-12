@@ -19,16 +19,4 @@ abstract class tiket {
     abstract public function hitungTotalHarga();
     abstract public function tampilkanInfoFasilitas();
 }
-
-// 2. Kelas Turunan (Contoh untuk Velvet)
-class tiketVelvet extends tiket {
-    public function hitungTotalHarga() {
-        // Logika: Harga dasar + biaya layanan butler
-        return ($this->harga_dasar_tiket * $this->jumlah_kursi) + 50000;
-    }
-
-    public function tampilkanInfoFasilitas() {
-        echo "Fasilitas: bantal, selimut, dan layanan butler eksklusif.";
-    }
-}
 ?>
