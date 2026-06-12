@@ -1,7 +1,7 @@
 <?php
-require_once 'Tiket.php';
+require_once 'tiket.php';
 
-class TiketVelvet extends Tiket {
+class tiketVelvet extends tiket {
     private $bantalSelimutPack;
     private $layananButler;
 
