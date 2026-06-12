@@ -1,6 +1,6 @@
 <?php
 // 1. Abstract Class (Penerapan Abstraksi)
-abstract class Tiket {
+abstract class tiket {
     protected $id_tiket;
     protected $nama_film;
     protected $jadwal_tayang;
@@ -21,7 +21,7 @@ abstract class Tiket {
 }
 
 // 2. Kelas Turunan (Contoh untuk Velvet)
-class TiketVelvet extends Tiket {
+class tiketVelvet extends tiket {
     public function hitungTotalHarga() {
         // Logika: Harga dasar + biaya layanan butler
         return ($this->harga_dasar_tiket * $this->jumlah_kursi) + 50000;
