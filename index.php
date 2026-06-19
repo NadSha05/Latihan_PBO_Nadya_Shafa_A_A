@@ -12,8 +12,8 @@ class TiketImax extends Tiket { public function hitungTotalHarga() { return ($th
 class TiketVelvet extends Tiket { public function hitungTotalHarga() { return ($this->kursi * $this->harga) + 50000; } }
 
 // Koneksi
-$conn = new mysqli("localhost", "root", "", "db_latihan_pbo_trpl1a_nadya_shafa_a_a");
-$data = $conn->query("SELECT * FROM tabel_tiket")->fetch_all(MYSQLI_ASSOC);
+//$conn = new mysqli("localhost", "root", "", "db_latihan_pbo_trpl1a_nadya_shafa_a_a");
+//$data = $conn->query("SELECT * FROM tabel_tiket")->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
