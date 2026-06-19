@@ -3,7 +3,7 @@
 $host = "localhost";
 $user = "root";       // Username default XAMPP/MariaDB
 $pass = "";           // Password default XAMPP/MariaDB biasanya kosong
-$db   = "db_latihan_pbo_trpl1a_nadya_shafa_a_a";
+$db   = "db_latihan_pbo_trpl1a_nadya_shafa a.a";
 
 // Membuat Koneksi
 $conn = new mysqli($host, $user, $pass, $db);
